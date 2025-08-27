@@ -10,6 +10,7 @@ namespace FilmLibrary.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Image { get; set; }
         public DateTime DateBirth { get; set; }
         public DateTime? DateDeath { get; set; } = null;
         public ICollection<FilmsActors> FilmActors { get; set; } = new List<FilmsActors>();

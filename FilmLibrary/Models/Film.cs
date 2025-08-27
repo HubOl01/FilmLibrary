@@ -10,7 +10,9 @@ namespace FilmLibrary.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Image { get; set; }
         public string Description { get; set; }
+        public string Category { get; set; }
         public int YearRelease { get; set; }
         public double Rate { get; set; } = 0;
         public int YearCreated { get; set; }
