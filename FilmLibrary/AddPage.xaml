@@ -36,10 +36,12 @@
                    />
                 <TextBox x:Name="imageTextBox" Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          TextChanged="ImageText_TextChanged"
+                         MaxWidth="700"
                     materialDesign:HintAssist.Hint="Изображение" Margin="10,10" Padding="10, 0"  MinHeight="30" Grid.Column="0" Grid.Row="1"/>
                 <TextBox x:Name="descTextBox" ToolTip="Описание фильма" Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     TextWrapping="Wrap"
                     AcceptsReturn="True"
+                    MaxWidth="700"
                     VerticalScrollBarVisibility="Auto"
                          TextChanged="ValidateFields"
                     materialDesign:HintAssist.Hint="Описание фильма" Margin="10,10" Padding="10"  MinHeight="30" Grid.Column="0" Grid.Row="1"/>
@@ -70,6 +72,7 @@
           Padding="10,0">
                     <ComboBoxItem Content="Фильм" />
                     <ComboBoxItem Content="Сериал" />
+                    <ComboBoxItem Content="Мультфильм" />
                     <ComboBoxItem Content="Документальный фильм" />
                 </ComboBox>
                 <Button x:Name="button1" Content="Создать"

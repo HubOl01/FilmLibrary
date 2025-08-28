@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FilmLibrary.Database;
+using FilmLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,32 @@ namespace FilmLibrary
         public ListPage()
         {
             InitializeComponent();
+            //FilmsDBContext context = new FilmsDBContext();
+            //dataFilmsGrid.ItemsSource = context.Films.ToList();
+            //dataFilmsGrid.IsReadOnly = true;
+            LoadData();
+        }
+        private void LoadData()
+        {
+            using (var context = new FilmsDBContext())
+            {
+                dataFilmsGrid.ItemsSource = context.Films.ToList();
+            }
+        }
+
+        private void dataFilmsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedFilm = dataFilmsGrid.SelectedItem as Film;
+            if (selectedFilm != null)
+            {
+                var editWindow = new DetailFilmWindow(selectedFilm);
+                editWindow.Owner = Window.GetWindow(this);
+                editWindow.ShowDialog();
+
+
+                LoadData();
+            }
         }
     }
-}
+     
+    }

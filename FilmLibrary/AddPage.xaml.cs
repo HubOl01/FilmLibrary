@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FilmLibrary.Database;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace FilmLibrary
             rateTextBox.TextChanged += ValidateFields;
             CategoryComboBox.SelectionChanged += ValidateFields;
 
-            // Первоначальная проверка состояния полей
+
             ValidateFields(null, null);
         }
 
@@ -39,42 +40,64 @@ namespace FilmLibrary
             if (Uri.TryCreate(textBox?.Text, UriKind.Absolute, out var uri) &&
                 (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
             {
-                image.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
+                image.Source = new BitmapImage(uri);
             }
             else
             {
-                image.Source = null; 
+                image.Source = null;
             }
             ValidateFields(sender, e);
         }
+
+        // Проверяем, что все обязательные поля заполнены
         private void ValidateFields(object sender, EventArgs e)
         {
-            // Проверяем, что все обязательные поля заполнены
             bool allFieldsFilled =
                 !string.IsNullOrWhiteSpace(nameTextBox.Text) &&
                 !string.IsNullOrWhiteSpace(descTextBox.Text) &&
                 !string.IsNullOrWhiteSpace(imageTextBox.Text) &&
                 !string.IsNullOrWhiteSpace(yearReleaseTextBox.Text) &&
-                !string.IsNullOrWhiteSpace(rateTextBox.Text) &&
-                !string.IsNullOrWhiteSpace(CategoryComboBox.Text);
+                !string.IsNullOrWhiteSpace(rateTextBox.Text);
 
-            // Обновляем состояние кнопки
             button1.IsEnabled = allFieldsFilled;
         }
 
         private void addFilm_Click(object sender, RoutedEventArgs e)
         {
-            Trace.WriteLine("Clicked!!!");
-            if(string.IsNullOrEmpty(nameTextBox.Text) &&
-                string.IsNullOrEmpty(descTextBox.Text) &&
-                string.IsNullOrEmpty(imageTextBox.Text) &&
-                string.IsNullOrEmpty(yearReleaseTextBox.Text) &&
-                string.IsNullOrEmpty(rateTextBox.Text) &&
-                string.IsNullOrEmpty(CategoryComboBox.Text)
-                )
-            {
+                FilmsDBContext context = new FilmsDBContext();
+            using (var db = new FilmsDBContext())
+                {
+                    db.Films.Add(new Models.Film()
+                    {
+                        Name = nameTextBox.Text,
+                        Image = imageTextBox.Text,
+                        Description = descTextBox.Text,
+                        Category = CategoryComboBox.Text,
+                        YearRelease = int.Parse(yearReleaseTextBox.Text),
+                        Rate = double.Parse(rateTextBox.Text.Replace(".", ",")),
+                        YearCreated = DateTime.Now.ToString(),
+                    });
+                db.SaveChanges();
+                }
+                    
+            var lastFilm = context.Films
+                      .OrderByDescending(f => f.Id)
+                      .FirstOrDefault();
 
-                Trace.WriteLine($"{nameTextBox.Text} - {descTextBox.Text} - {imageTextBox.Text} - {CategoryComboBox.Text}");
+            if (lastFilm != null)
+                Trace.WriteLine($"Последний фильм: {lastFilm.Name}");
+            else
+                Trace.WriteLine("Нет такого фильма в базе.");
+            if(lastFilm != null && lastFilm.Name == nameTextBox.Text)
+            {
+                nameTextBox.Clear();
+                descTextBox.Clear();
+                imageTextBox.Clear();
+                yearReleaseTextBox.Clear();
+                rateTextBox.Clear();
+                CategoryComboBox.SelectedItem = null;
+                image.Source = null;
+                ValidateFields(null, null);
             }
         }
     }

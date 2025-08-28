@@ -9,6 +9,34 @@
     <Grid>
         <StackPanel Margin="10">
             <TextBlock Text="Список фильмов/сериалов" FontSize="20" />
+            <DataGrid x:Name="dataFilmsGrid" IsReadOnly="true"
+                      MouseDoubleClick="dataFilmsGrid_MouseDoubleClick"
+                      GridLinesVisibility="Horizontal"
+          SelectionMode="Single"
+                      AutoGenerateColumns="False"
+                      MaxHeight="800"
+                      VerticalScrollBarVisibility="Auto"
+>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Изображение" Width="160">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Image}" 
+       Width="auto" Height="auto" 
+       Stretch="UniformToFill"
+       Margin="5"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="auto"/>
+                    <DataGridTextColumn Header="Год выпуска" Binding="{Binding YearRelease}" Width="120"/>
+                    <DataGridTextColumn Header="Оценка" Binding="{Binding Rate}" Width="80"/>
+                    <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="120"/>
+
+                    <!-- Столбец с изображением -->
+                    
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
         
     </Grid>

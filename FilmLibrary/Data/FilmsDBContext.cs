@@ -1,5 +1,6 @@
 ﻿using FilmLibrary.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,12 @@ namespace FilmLibrary.Database
         public DbSet<FilmsActors> FilmActors { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=filmLibrary.db");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlite("Data Source=FilmLibrary.db")
+                         .LogTo(Console.WriteLine, LogLevel.Information) // 🔥 Логи!
+            .EnableSensitiveDataLogging();
+            }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -70,7 +70,7 @@ Foreground="Black"
                 </ListViewItem>
             </ListView>
         </Grid>
-        <Grid Grid.Column="1" Width="600" x:Name="gridPages">
+        <Grid Grid.Column="1" Width="auto" x:Name="gridPages" HorizontalAlignment="Stretch" >
             <l:AddPage Loaded="AddPage_Loaded"/>
 
         </Grid>

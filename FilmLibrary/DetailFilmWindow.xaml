@@ -1,0 +1,69 @@
+﻿<Window x:Class="FilmLibrary.DetailFilmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FilmLibrary"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="О фильме" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="17*" ></ColumnDefinition>
+            <ColumnDefinition Width="30*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Margin="10">
+            <Image x:Name="image" Source="{Binding Image}" VerticalAlignment="Top"/>
+
+
+        </Grid>
+        <Grid Grid.Column="1" Margin="10">
+            <ScrollViewer >
+                <StackPanel >
+                    <DockPanel>
+                        <TextBlock FontSize="16" FontWeight="Bold"><Run Text="Название фильма:"/></TextBlock>
+                        <TextBlock FontSize="16" Margin="10 0 10 10" Text="{Binding Name}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock 
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Text="Описание фильма:"
+                             />
+
+                        <TextBlock FontSize="16"
+                            Text="{Binding Description}"
+                                   Margin="10 0 10 10"
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Top" />
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock FontSize="16" FontWeight="Bold"><Run Text="Дата выпуска:"/></TextBlock>
+                        <TextBlock FontSize="16" Margin="10 0 10 10" Text="{Binding YearRelease}"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock FontSize="16" FontWeight="Bold"><Run Text="Оценка:"/></TextBlock>
+                        <TextBlock FontSize="16" Margin="10 0 10 10" Text="{Binding Rate}"/>
+                    </DockPanel>
+                </StackPanel>
+
+
+            </ScrollViewer>
+
+
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Button Background="Red" Content="Удалить"
+                    Margin="10"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    Click="DeleteFilm_Click"
+                    >
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
