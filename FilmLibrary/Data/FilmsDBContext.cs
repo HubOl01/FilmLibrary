@@ -19,7 +19,7 @@ namespace FilmLibrary.Database
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlite("Data Source=FilmLibrary.db")
-                         .LogTo(Console.WriteLine, LogLevel.Information) // 🔥 Логи!
+                         .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging();
             }
         }
